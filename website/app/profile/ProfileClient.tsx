@@ -180,25 +180,29 @@ export default function ProfileClient() {
         <div style={{ display: 'grid', gridTemplateColumns: '240px 1fr', gap: 'clamp(3rem, 6vw, 6rem)' }} className="profile-grid">
           
           {/* Sidebar Navigation */}
-          <aside style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
+          <aside style={{ display: 'flex', flexDirection: 'column', gap: '0.1rem' }}>
             {tabs.map(tab => (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id as TabId)}
                 style={{
-                  textAlign: 'left', background: 'none', border: 'none', padding: '0.85rem 0',
-                  fontFamily: 'var(--font-sans)', fontSize: '0.75rem', letterSpacing: '0.15em',
+                  textAlign: 'left', background: 'none', border: 'none',
+                  padding: '0.95rem 0',
+                  fontFamily: 'var(--font-sans)',
+                  fontSize: '0.72rem',
+                  letterSpacing: '0.12em',
                   textTransform: 'uppercase',
                   cursor: 'pointer',
-                  color: activeTab === tab.id ? 'var(--color-black)' : 'var(--color-grey)',
-                  fontWeight: activeTab === tab.id ? 600 : 300,
+                  color: activeTab === tab.id ? 'var(--color-black)' : 'rgba(8,8,8,0.45)',
+                  fontWeight: activeTab === tab.id ? 600 : 400,
                   transition: 'all 0.3s ease',
-                  position: 'relative'
+                  position: 'relative',
+                  borderBottom: '1px solid rgba(8,8,8,0.04)',
                 }}
               >
                 {tab.label}
                 {activeTab === tab.id && (
-                  <motion.div layoutId="profile-tab-indicator" style={{ position: 'absolute', left: '-1rem', top: '50%', transform: 'translateY(-50%)', width: '2px', height: '14px', background: 'var(--color-gold)' }} />
+                  <motion.div layoutId="profile-tab-indicator" style={{ position: 'absolute', left: '-1rem', top: '50%', transform: 'translateY(-50%)', width: '2px', height: '16px', background: 'var(--color-gold)' }} />
                 )}
               </button>
             ))}
@@ -299,31 +303,20 @@ export default function ProfileClient() {
                       </form>
                     ) : (
                       <>
-                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2.5rem' }}>
-                          <div className="info-block">
-                            <span className="t-label">First Name</span>
-                            <p>{user.firstName}</p>
-                          </div>
-                          <div className="info-block">
-                            <span className="t-label">Last Name</span>
-                            <p>{user.lastName}</p>
-                          </div>
-                          <div className="info-block">
-                            <span className="t-label">Email Address</span>
-                            <p>{user.email}</p>
-                          </div>
-                          <div className="info-block">
-                            <span className="t-label">Phone Number</span>
-                            <p>{user.phone || 'Not provided'}</p>
-                          </div>
-                          <div className="info-block">
-                            <span className="t-label">Gender</span>
-                            <p>{user.gender || 'Not specified'}</p>
-                          </div>
-                          <div className="info-block">
-                            <span className="t-label">Date of Birth</span>
-                            <p>{user.dateOfBirth || 'Not specified'}</p>
-                          </div>
+                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem 3rem' }}>
+                          {[
+                            { label: 'First Name', value: user.firstName },
+                            { label: 'Last Name', value: user.lastName },
+                            { label: 'Email Address', value: user.email },
+                            { label: 'Phone Number', value: user.phone || '—' },
+                            { label: 'Gender', value: user.gender || '—' },
+                            { label: 'Date of Birth', value: user.dateOfBirth || '—' },
+                          ].map(field => (
+                            <div key={field.label} className="info-block">
+                              <span className="t-label" style={{ fontSize: '0.6rem', letterSpacing: '0.15em' }}>{field.label}</span>
+                              <p>{field.value}</p>
+                            </div>
+                          ))}
                         </div>
                         <Button variant="outline" style={{ marginTop: '3rem' }} onClick={startEditing}>
                           Edit Account Details
@@ -610,29 +603,74 @@ export default function ProfileClient() {
                   </div>
                 )}
 
+                {/* 10. Payment Methods Tab */}
+                {activeTab === 'payments' && (
+                  <div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2.5rem', borderBottom: '1px solid rgba(8,8,8,0.08)', paddingBottom: '1rem' }}>
+                      <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.75rem', fontWeight: 400, margin: 0 }}>Payment Methods</h2>
+                      <Button variant="outline">Add New Card</Button>
+                    </div>
+                    <div style={{ border: '1px solid rgba(8,8,8,0.08)', padding: '3rem', textAlign: 'center', background: '#FCFAF6' }}>
+                      <p style={{ fontFamily: 'var(--font-serif)', fontSize: '1.25rem', fontWeight: 400, margin: '0 0 0.75rem', color: 'var(--color-black)' }}>No Saved Payment Methods</p>
+                      <p className="t-body" style={{ margin: '0 0 2rem' }}>Payment details are securely stored and never retained on our servers.</p>
+                      <p style={{ fontFamily: 'var(--font-sans)', fontSize: '0.75rem', color: 'var(--color-grey-light)', lineHeight: 1.6, maxWidth: 400, margin: '0 auto' }}>We accept UPI, Net Banking, all major Credit &amp; Debit Cards, and International Wire Transfer. Payment processing is handled by Razorpay (PCI DSS Level 1 compliant).</p>
+                    </div>
+                  </div>
+                )}
+
               </motion.div>
             </AnimatePresence>
           </div>
         </div>
       </div>
       <style>{`
+        .tab-card { }
         .info-block {
-          border-bottom: 1px solid rgba(8, 8, 8, 0.08);
-          padding-bottom: 1rem;
-          margin-bottom: 1.5rem;
+          padding-bottom: 1.25rem;
+          border-bottom: 1px solid rgba(8, 8, 8, 0.07);
         }
-        .info-block p { 
-          font-family: var(--font-sans); 
-          font-size: 1rem; 
-          color: var(--color-black); 
-          margin: 0.5rem 0 0; 
+        .info-block .t-label {
+          display: block;
+          margin-bottom: 0.5rem;
+          font-size: 0.6rem;
+          letter-spacing: 0.18em;
+          color: rgba(8,8,8,0.45);
           font-weight: 500;
         }
-        
+        .info-block p { 
+          font-family: var(--font-sans);
+          font-size: 0.95rem;
+          color: var(--color-black);
+          margin: 0;
+          font-weight: 500;
+          letter-spacing: 0.01em;
+        }
+
         @media (max-width: 900px) {
-          .profile-grid { grid-template-columns: 1fr !important; gap: 2rem !important; }
-          .profile-grid aside { flex-direction: row; overflow-x: auto; padding-bottom: 1rem; border-bottom: 1px solid rgba(8,8,8,0.08); }
-          .profile-grid aside button { white-space: nowrap; padding: 0.5rem 1rem !important; margin: 0 !important; border-bottom: 2px solid transparent !important; }
+          .profile-grid { grid-template-columns: 1fr !important; gap: 0 !important; }
+          .profile-grid aside {
+            flex-direction: row;
+            overflow-x: auto;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid rgba(8,8,8,0.06);
+            margin-bottom: 2.5rem;
+            gap: 0;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+          }
+          .profile-grid aside::-webkit-scrollbar { display: none; }
+          .profile-grid aside button {
+            white-space: nowrap;
+            padding: 0.6rem 1.25rem !important;
+            border-bottom: 2px solid transparent !important;
+            font-size: 0.62rem !important;
+          }
+          .profile-grid aside button[style*='600'] {
+            border-bottom-color: var(--color-gold) !important;
+          }
+        }
+        @media (max-width: 480px) {
+          .info-block p { font-size: 0.9rem; }
         }
       `}</style>
     </main>

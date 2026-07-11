@@ -38,12 +38,13 @@ export default function Footer() {
           <Link href="/bespoke" className="footer-link">Bespoke Appointments</Link>
           <Link href="/about" className="footer-link">Our Craftsmanship</Link>
           <Link href="/company" className="footer-link">Company Heritage</Link>
+          <Link href="/journal" className="footer-link">The Journal</Link>
         </div>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
           <h4 style={{ fontFamily: 'var(--font-serif)', fontSize: '1rem', color: 'var(--luxury-white)', margin: 0 }}>Client Services</h4>
-          <Link href="/support" className="footer-link">Support & FAQ</Link>
-          <Link href="/returns" className="footer-link">Returns & Exchanges</Link>
+          <Link href="/support" className="footer-link">Support &amp; FAQ</Link>
+          <Link href="/returns" className="footer-link">Returns &amp; Exchanges</Link>
           <Link href="/shipping" className="footer-link">Worldwide Shipping</Link>
           <Link href="/privacy" className="footer-link">Privacy Policy</Link>
           <Link href="/terms" className="footer-link">Terms of Service</Link>

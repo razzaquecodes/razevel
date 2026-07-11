@@ -63,7 +63,7 @@ export default function Journal() {
               Stories of<br /><em>Craft & Culture.</em>
             </motion.h2>
           </div>
-          <motion.a href="#" className="btn btn-ghost"
+          <motion.a href="/journal" className="btn btn-ghost"
             style={{ color: 'var(--black)', borderColor: 'rgba(15,15,15,0.2)' }}
             initial={{ opacity: 0 }} animate={inView ? { opacity: 1 } : {}}
             transition={{ duration: 0.7, delay: 0.2 }}>
