@@ -1,0 +1,370 @@
+/* ============================================================
+   RAZEVÉL — Official Digital Flagship v4
+   World-Class Luxury Design System
+   ============================================================ */
+
+/* Tailwind base (utility-only usage) */
+@import "tailwindcss";
+
+:root {
+  /* ── Colors ──────────────────────────────────────────────── */
+  --color-gold: #C9A84C;
+  --color-gold-light: #D4B86A;
+  --color-gold-muted: rgba(201, 168, 76, 0.15);
+  --color-black: #080808;
+  --color-white: #FAFAFA;
+  --color-grey: #33312E;
+  --color-grey-light: #8C857A;
+  --color-border: rgba(8, 8, 8, 0.15);
+
+  /* Legacy mapping for existing components */
+  --deep-black: var(--color-black);
+  --luxury-white: var(--color-white);
+  --soft-ivory: #F5F2EB;
+  --warm-gold: var(--color-gold);
+  --stone: var(--color-grey);
+  --taupe: var(--color-grey-light);
+  --border: rgba(8, 8, 8, 0.08);
+  --border-mid: var(--color-border);
+  --gold-border: rgba(201, 168, 76, 0.3);
+
+  /* ── Spacing ─────────────────────────────────────────────── */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 1rem;
+  --space-4: 1.5rem;
+  --space-5: 2rem;
+  --space-6: 3rem;
+  --space-7: 4rem;
+  --space-8: 6rem;
+  --space-md: 1.25rem;
+
+  /* Section spacing — used by homepage sections */
+  --section-y: clamp(6rem, 12vw, 12rem);
+  --section-y-sm: clamp(4rem, 8vw, 8rem);
+
+  /* ── Typography ──────────────────────────────────────────── */
+  --font-serif: var(--font-playfair), Georgia, 'Times New Roman', serif;
+  --font-sans: var(--font-montserrat), -apple-system, 'Helvetica Neue', sans-serif;
+
+  /* ── Containers ──────────────────────────────────────────── */
+  --container-max: 120rem;
+  --container-content: 90rem;
+  --container-section: 64rem;
+  --max-w: var(--container-content);
+  --gutter: clamp(1.5rem, 4vw, 4rem);
+
+  /* ── Radius & Shadows ────────────────────────────────────── */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 16px;
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 10px 40px rgba(0, 0, 0, 0.12);
+  --shadow-xl: 0 20px 60px rgba(0, 0, 0, 0.16);
+
+  /* ── Transitions & Easing ────────────────────────────────── */
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
+  --ease-luxury: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --ease-reveal: cubic-bezier(0.77, 0, 0.175, 1);
+  --transition-fast: 0.2s var(--ease);
+  --transition-base: 0.4s var(--ease);
+  --transition-slow: 0.8s var(--ease);
+  --transition-cinematic: 1.2s var(--ease-out-expo);
+
+  /* ── Navbar ──────────────────────────────────────────────── */
+  --nav-height: 80px;
+}
+
+/* ============================================================
+   Reset & Base
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  scroll-behavior: auto;
+  font-size: 16px;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: var(--color-white);
+  color: var(--color-black);
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+::selection { background: var(--color-gold); color: var(--color-black); }
+
+/* Lenis */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-stopped { overflow: hidden; }
+
+/* ============================================================
+   Typography
+   ============================================================ */
+.t-display-xl {
+  font-family: var(--font-serif);
+  font-size: clamp(4rem, 8vw, 8.5rem);
+  line-height: 1.0;
+  letter-spacing: -0.03em;
+  font-weight: 400;
+}
+.t-display-l {
+  font-family: var(--font-serif);
+  font-size: clamp(3rem, 6vw, 6rem);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  font-weight: 400;
+}
+.t-heading-xl {
+  font-family: var(--font-serif);
+  font-size: clamp(2.5rem, 4.5vw, 4.5rem);
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+  font-weight: 400;
+}
+.t-heading-l {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  font-weight: 400;
+}
+.t-heading-m {
+  font-family: var(--font-serif);
+  font-size: clamp(1.5rem, 2.5vw, 2rem);
+  line-height: 1.2;
+  font-weight: 400;
+}
+.t-body-lg {
+  font-family: var(--font-sans);
+  font-size: clamp(1.125rem, 1.25vw, 1.25rem);
+  font-weight: 300;
+  line-height: 1.8;
+  color: var(--color-grey);
+}
+.t-body {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 300;
+  line-height: 1.75;
+  color: var(--color-grey);
+}
+.t-small {
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: 400;
+  color: var(--color-grey-light);
+}
+.t-caption {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-grey-light);
+}
+.t-label {
+  font-family: var(--font-sans); font-size: 0.6875rem; font-weight: 500;
+  letter-spacing: 0.22em; text-transform: uppercase; color: var(--color-grey-light);
+}
+.t-label-gold {
+  font-family: var(--font-sans); font-size: 0.6875rem; font-weight: 500;
+  letter-spacing: 0.22em; text-transform: uppercase; color: var(--color-gold);
+}
+
+/* ============================================================
+   Layout Utilities
+   ============================================================ */
+.container-max { max-width: var(--container-max); margin-inline: auto; padding-inline: var(--gutter); }
+.container-content { max-width: var(--container-content); margin-inline: auto; padding-inline: var(--gutter); }
+.container-section { max-width: var(--container-section); margin-inline: auto; padding-inline: var(--gutter); }
+.container { max-width: var(--container-content); margin-inline: auto; padding-inline: var(--gutter); }
+.container-narrow { max-width: var(--container-section); margin-inline: auto; padding-inline: var(--gutter); }
+
+/* ============================================================
+   Buttons
+   ============================================================ */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.6rem;
+  font-family: var(--font-sans); font-size: 0.75rem; font-weight: 500; letter-spacing: 0.15em;
+  text-transform: uppercase; text-decoration: none; cursor: pointer; border: none; background: none;
+  transition: all var(--transition-base); padding: var(--space-4) var(--space-5);
+  border-radius: 0; position: relative; overflow: hidden;
+}
+.btn:focus-visible { outline: 2px solid var(--color-gold); outline-offset: 4px; }
+
+.btn-primary { background: var(--color-black); color: var(--color-white); box-shadow: var(--shadow-lg); }
+.btn-primary:hover { background: var(--color-grey); transform: translateY(-2px); }
+
+.btn-secondary { background: var(--color-grey); color: var(--color-white); }
+.btn-secondary:hover { background: var(--color-black); }
+
+.btn-outline {
+  color: var(--color-black); border: 1px solid var(--color-border);
+  padding: calc(var(--space-4) - 1px) calc(var(--space-5) - 1px);
+}
+.btn-outline:hover {
+  background: var(--color-black); color: var(--color-white);
+  border-color: var(--color-black); transform: translateY(-2px);
+}
+
+.btn-ghost {
+  color: var(--color-grey); padding: 0 0 var(--space-2) 0;
+  border-bottom: 1px solid var(--color-border);
+}
+.btn-ghost:hover { color: var(--color-black); border-color: var(--color-black); }
+
+.btn-danger { background: #E63946; color: var(--color-white); }
+.btn-success { background: #2A9D8F; color: var(--color-white); }
+
+.btn-gold {
+  background: var(--color-gold); color: var(--color-black);
+  box-shadow: 0 10px 40px rgba(201,168,76,0.15);
+}
+.btn-gold:hover { filter: brightness(1.1); transform: translateY(-2px); }
+
+/* ============================================================
+   Form Elements
+   ============================================================ */
+.input-luxury {
+  font-family: var(--font-sans); font-size: 0.875rem; font-weight: 300; color: var(--color-black);
+  background: transparent; border: none; border-bottom: 1px solid var(--color-border); padding: 0.85rem 0;
+  width: 100%; outline: none; transition: border-color var(--transition-base); letter-spacing: 0.02em;
+}
+.input-luxury:focus { border-color: var(--color-gold); }
+
+/* ============================================================
+   Marquee
+   ============================================================ */
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* ============================================================
+   Loading Screen & Preloader Scissor Seam Animation
+   ============================================================ */
+body.is-loading {
+  overflow: hidden !important;
+  height: 100vh !important;
+}
+
+.preloader-stage {
+  position: fixed; inset: 0; z-index: 9999;
+  background: #0b0b0a;
+  pointer-events: all;
+  overflow: hidden;
+}
+.preloader-stage.is-complete {
+  pointer-events: none;
+}
+
+/* Fabric Halves */
+.fabric {
+  position: absolute; left: 0; right: 0; height: 52%;
+  background:
+    repeating-linear-gradient(118deg, rgba(201, 168, 76, 0.035) 0px, rgba(201, 168, 76, 0.035) 1px, transparent 1px, transparent 40px),
+    repeating-linear-gradient(28deg, rgba(201, 168, 76, 0.03) 0px, rgba(201, 168, 76, 0.03) 1px, transparent 1px, transparent 40px),
+    linear-gradient(180deg, #121110, #0b0b0a);
+  z-index: 5;
+  will-change: transform, opacity;
+}
+#fabricTop {
+  top: 0;
+  clip-path: polygon(0 0, 100% 0, 100% 96%, 97% 98%, 94% 95%, 91% 99%, 88% 96%, 85% 100%, 82% 95%, 79% 98%, 76% 94%, 73% 99%, 70% 96%, 67% 100%, 64% 95%, 61% 98%, 58% 94%, 55% 99%, 52% 96%, 49% 100%, 46% 95%, 43% 98%, 40% 94%, 37% 99%, 34% 96%, 31% 100%, 28% 95%, 25% 98%, 22% 94%, 19% 99%, 16% 96%, 13% 100%, 10% 95%, 7% 98%, 4% 94%, 1% 99%, 0 96%);
+}
+#fabricBottom {
+  bottom: 0;
+  clip-path: polygon(0 4%, 3% 2%, 6% 6%, 9% 1%, 12% 5%, 15% 0, 18% 4%, 21% 1%, 24% 6%, 27% 2%, 30% 5%, 33% 1%, 36% 4%, 39% 0, 42% 5%, 45% 1%, 48% 4%, 51% 0, 54% 5%, 57% 1%, 60% 4%, 63% 0, 66% 5%, 69% 1%, 72% 4%, 75% 0, 78% 5%, 81% 1%, 84% 4%, 87% 0, 90% 5%, 93% 1%, 96% 4%, 100% 0, 100% 100%, 0 100%);
+}
+
+/* Seam Fray Track */
+#frayTrack {
+  position: absolute; left: 0; top: calc(50% - 1px); height: 2px; width: 0%;
+  background-image: repeating-linear-gradient(90deg, var(--color-gold) 0 2px, transparent 2px 9px);
+  box-shadow: 0 0 6px rgba(201, 168, 76, 0.6);
+  z-index: 8;
+  will-change: width, opacity;
+}
+
+/* Chalk Guideline */
+#chalkLine {
+  position: absolute; left: 0; top: 50%; height: 0; width: 100%;
+  border-top: 1px dashed rgba(212, 175, 55, 0.45);
+  transform: translateY(-.5px) scaleX(0); transform-origin: left center;
+  z-index: 6;
+  will-change: transform, opacity;
+}
+
+/* Scissors */
+#scissorsWrap {
+  position: absolute; top: 50%; left: -70px; width: 64px; height: 64px;
+  transform: translateY(-50%); z-index: 9;
+  will-change: left, opacity;
+}
+#scissorsWrap svg { width: 100%; height: 100%; overflow: visible; }
+.blade { fill: none; stroke: var(--color-gold-light); stroke-width: 2.4; stroke-linecap: round; transform-origin: 30px 30px; }
+.loop { fill: none; stroke: var(--color-gold); stroke-width: 2; }
+.pivot { fill: var(--color-gold); }
+#snipFlash {
+  position: absolute; top: 50%; left: 100%; width: 26px; height: 26px;
+  transform: translate(-50%,-50%); border-radius: 50%; opacity: 0;
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.9), rgba(212, 175, 55, 0) 70%);
+}
+
+/* preloader reveal content */
+.preloader-reveal {
+  position: absolute; inset: 0; z-index: 1;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+}
+
+/* ============================================================
+   Ambient Grain
+   ============================================================ */
+.grain {
+  position: fixed; inset: -10%; z-index: 9998; pointer-events: none; opacity: 0.03;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: grain-shift 0.8s steps(3) infinite;
+}
+@keyframes grain-shift {
+  0%, 100% { transform: translate(0,0); }
+  33% { transform: translate(-2%, 2%); }
+  66% { transform: translate(2%, -1%); }
+}
+
+/* ============================================================
+   GSAP Animation Helpers
+   ============================================================ */
+.gsap-reveal { opacity: 0; transform: translateY(40px); will-change: opacity, transform; }
+.gsap-reveal-mask { clip-path: inset(100% 0 0 0); will-change: clip-path; }
+.gsap-reveal-scale { opacity: 0; transform: scale(1.15); will-change: opacity, transform; }
+.gsap-split-char { display: inline-block; opacity: 0; transform: translateY(100%); }
+.gsap-line { transform: scaleX(0); transform-origin: left; will-change: transform; }
+
+/* ============================================================
+   Visibility & Responsive
+   ============================================================ */
+.hide-mobile { display: block; }
+.hide-desktop { display: none; }
+
+@media (max-width: 768px) {
+  .hide-mobile { display: none !important; }
+  .hide-desktop { display: block !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+  .gsap-reveal, .gsap-reveal-scale { opacity: 1; transform: none; }
+  .gsap-reveal-mask { clip-path: none; }
+}
