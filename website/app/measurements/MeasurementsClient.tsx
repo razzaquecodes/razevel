@@ -39,6 +39,7 @@ export default function MeasurementsClient() {
       setCurrentStep(prev => prev + 1);
     } else {
       setIsSaving(true);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const parsedData: Record<string, any> = {
         profile_name: formData.profile || 'My Measurements',
         for_self: true,
@@ -51,6 +52,7 @@ export default function MeasurementsClient() {
          if (!isNaN(val) && val > 0) parsedData[field] = val;
       });
 
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       await addMeasurement(parsedData as any);
       setIsSaving(false);
       setIsComplete(true);

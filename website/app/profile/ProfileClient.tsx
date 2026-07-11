@@ -70,9 +70,9 @@ export default function ProfileClient() {
       await refreshUser();
       showToast('Profile updated successfully.', 'success');
       setIsEditing(false);
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('Failed to update profile:', err);
-      showToast(err.message || 'Failed to update profile.', 'error');
+      showToast(err instanceof Error ? err.message : 'Failed to update profile.', 'error');
     } finally {
       setSaving(false);
     }
@@ -95,10 +95,8 @@ export default function ProfileClient() {
   const [activeTab, setActiveTab] = useState<TabId>('profile');
 
   useEffect(() => {
-    if (isInitialized && !user) {
-      router.push('/login');
-    }
-  }, [user, isInitialized, router]);
+    // Client-side initialization logic if needed, but routing is handled by middleware
+  }, [isInitialized]);
 
   if (!isInitialized || !user) {
     return (

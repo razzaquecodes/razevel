@@ -35,7 +35,7 @@ type CartAction =
   | { type: 'CLOSE_CART' }
   | { type: 'TOGGLE_CART' };
 
-type CartActionWithSync = CartAction | { type: 'SYNC_FROM_CLOUD'; items: CartItem[]; wishlist: string[] };
+type CartActionWithSync = CartAction | { type: 'SYNC_FROM_CLOUD'; items: CartItem[]; wishlist: string[] } | { type: 'MERGE_CLOUD_DATA'; cloudItems?: CartItem[]; cloudWishlist: string[] };
 
 // ─── Reducer ──────────────────────────────────────────────────────────────────
 function cartReducer(state: CartState, action: CartActionWithSync): CartState {
@@ -103,6 +103,14 @@ function cartReducer(state: CartState, action: CartActionWithSync): CartState {
         items: action.items || state.items,
         wishlist: action.wishlist || state.wishlist,
       };
+    case 'MERGE_CLOUD_DATA': {
+      const mergedWishlist = Array.from(new Set([...state.wishlist, ...action.cloudWishlist]));
+      return {
+        ...state,
+        wishlist: mergedWishlist,
+        // (Could merge items similarly if needed)
+      };
+    }
     default:
       return state;
   }
@@ -130,7 +138,7 @@ const INITIAL: CartState = {
 
 export function CartProvider({ children }: { children: ReactNode }) {
   const { user } = useAuth();
-  const supabase = createClient();
+  const supabase = useMemo(() => createClient(), []);
   const isSyncing = useRef(false);
 
   const [state, dispatch] = useReducer(cartReducer, INITIAL);
@@ -168,16 +176,13 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
         const cloudWishlist = wishData?.map(w => w.product_id) || [];
         
-        // Merge cloud with local
-        const mergedWishlist = Array.from(new Set([...state.wishlist, ...cloudWishlist]));
-        
-        dispatch({ type: 'SYNC_FROM_CLOUD', items: state.items, wishlist: mergedWishlist } as any);
+        dispatch({ type: 'MERGE_CLOUD_DATA', cloudWishlist });
       } finally {
         isSyncing.current = false;
       }
     }
     pullCloudData();
-  }, [user?.id]);
+  }, [user, supabase]);
 
   // Push to Cloud / Local on change (only after initial load has completed)
   useEffect(() => {
@@ -196,7 +201,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
       }
     };
     persistData();
-  }, [state.items, state.wishlist, user?.id]);
+  }, [state.items, state.wishlist, user, supabase]);
 
   // Derived state calculations (useMemoized)
   const totalItems = useMemo(() => state.items.reduce((sum, i) => sum + i.quantity, 0), [state.items]);

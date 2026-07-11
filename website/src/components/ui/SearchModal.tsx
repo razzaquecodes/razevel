@@ -15,15 +15,20 @@ export default function SearchModal({ isOpen, onClose }: { isOpen: boolean; onCl
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden';
-      setTimeout(() => inputRef.current?.focus(), 100);
+      // Focus input on open
+      const timer = setTimeout(() => inputRef.current?.focus(), 100);
+      return () => clearTimeout(timer);
     } else {
       document.body.style.overflow = '';
-      if (query !== '') setQuery('');
+      setQuery('');
     }
+  }, [isOpen]);
+
+  useEffect(() => {
     return () => {
       document.body.style.overflow = '';
     };
-  }, [isOpen, query]);
+  }, []);
 
   const searchResults = query.trim().length > 1 
     ? MOCK_PRODUCTS.filter(p => 

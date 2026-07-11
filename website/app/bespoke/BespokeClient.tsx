@@ -96,8 +96,9 @@ export default function BespokeClient() {
       }
 
       // Scroll reveals
-      gsap.utils.toArray('.reveal-up').forEach((el: any) => {
-        revealUp(el, { trigger: el, y: 30, duration: 1.2 });
+      gsap.utils.toArray('.reveal-up').forEach((el: unknown) => {
+        const element = el as HTMLElement;
+        revealUp(element, { trigger: element, y: 30, duration: 1.2 });
       });
 
       // Animate timeline connector line

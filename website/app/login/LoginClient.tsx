@@ -36,7 +36,6 @@ export default function LoginClient() {
       router.push('/profile');
     } catch (err) {
       showToast(err instanceof Error ? err.message : 'Failed to login', 'error');
-    } finally {
       setIsSubmitting(false);
     }
   };
@@ -45,11 +44,9 @@ export default function LoginClient() {
     setIsGoogleLoading(true);
     try {
       await loginWithGoogle();
-      showToast('Successfully authenticated via Google', 'success');
-      router.push('/profile');
+      // Note: signInWithOAuth redirects the page, so code below here won't execute on success.
     } catch (err) {
       showToast('Google authentication failed', 'error');
-    } finally {
       setIsGoogleLoading(false);
     }
   };

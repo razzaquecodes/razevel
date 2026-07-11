@@ -50,8 +50,7 @@ export default function RegisterClient() {
       showToast('Your journey begins now.', 'success');
       router.push('/profile');
     } catch (err) {
-      showToast(err instanceof Error ? err.message : 'Registration failed', 'error');
-    } finally {
+      showToast(err instanceof Error ? err.message : 'Failed to create account.', 'error');
       setIsSubmitting(false);
     }
   };

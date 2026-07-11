@@ -41,7 +41,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     isInitialized: false,
   });
 
-  const supabase = createClient();
+  const supabase = useMemo(() => createClient(), []);
 
   const parseUser = (supabaseUser: SupabaseUser, profileData: Record<string, string> | null = null): User => {
     const meta = supabaseUser.user_metadata || {};
@@ -71,11 +71,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     };
   };
 
-  const syncProfile = async (supabaseUser: SupabaseUser) => {
+  const syncProfile = useCallback(async (supabaseUser: SupabaseUser) => {
     console.log('[AuthContext] Syncing profile for user:', supabaseUser.id);
     try {
       const { data, error } = await supabase.from('profiles').select('*').eq('id', supabaseUser.id).single();
-      let profile = data;
+      const profile = data;
       
       if (error) {
         console.warn('[AuthContext] Error fetching profile:', error.message);
@@ -91,7 +91,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       console.error('[AuthContext] Exception in syncProfile:', err);
       return null;
     }
-  };
+  }, [supabase]);
 
   useEffect(() => {
     const initSession = async () => {
@@ -125,8 +125,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     });
 
     return () => subscription.unsubscribe();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [supabase.auth]);
+  }, [supabase.auth, syncProfile]);
 
   const login = useCallback(async (email: string, pass: string) => {
     setState(s => ({ ...s, isLoading: true }));
@@ -206,7 +205,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const profileData = await syncProfile(supabaseUser);
       setState(s => ({ ...s, user: parseUser(supabaseUser, profileData) }));
     }
-  }, [supabase]);
+  }, [supabase.auth, syncProfile]);
 
   const contextValue = React.useMemo(() => ({
     ...state,

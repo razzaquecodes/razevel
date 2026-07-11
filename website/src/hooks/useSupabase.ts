@@ -1,15 +1,15 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo, useCallback } from 'react';
 import { createClient } from '@/src/lib/supabase/client';
 import { useAuth } from '@/src/context/AuthContext';
 import { Database } from '@/src/types/database';
 
 export function useMeasurements() {
   const { user } = useAuth();
-  const supabase = createClient();
+  const supabase = useMemo(() => createClient(), []);
   const [measurements, setMeasurements] = useState<Database['public']['Tables']['body_measurements']['Row'][]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  const fetchMeasurements = async () => {
+  const fetchMeasurements = useCallback(async () => {
     if (!user) {
       setMeasurements([]);
       setIsLoading(false);
@@ -27,11 +27,11 @@ export function useMeasurements() {
       setMeasurements(data);
     }
     setIsLoading(false);
-  };
+  }, [user, supabase]);
 
   useEffect(() => {
     fetchMeasurements();
-  }, [user?.id]);
+  }, [fetchMeasurements]);
 
   const addMeasurement = async (measurement: Omit<Database['public']['Tables']['body_measurements']['Insert'], 'user_id'>) => {
     if (!user) return;
@@ -54,11 +54,11 @@ export function useMeasurements() {
 
 export function useAddresses() {
   const { user } = useAuth();
-  const supabase = createClient();
+  const supabase = useMemo(() => createClient(), []);
   const [addresses, setAddresses] = useState<Database['public']['Tables']['delivery_addresses']['Row'][]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  const fetchAddresses = async () => {
+  const fetchAddresses = useCallback(async () => {
     if (!user) {
       setAddresses([]);
       setIsLoading(false);
@@ -73,11 +73,11 @@ export function useAddresses() {
 
     if (!error && data) setAddresses(data);
     setIsLoading(false);
-  };
+  }, [user, supabase]);
 
   useEffect(() => {
     fetchAddresses();
-  }, [user?.id]);
+  }, [fetchAddresses]);
 
   const addAddress = async (address: Omit<Database['public']['Tables']['delivery_addresses']['Insert'], 'user_id'>) => {
     if (!user) return;
@@ -91,11 +91,11 @@ export function useAddresses() {
 
 export function useOrders() {
   const { user } = useAuth();
-  const supabase = createClient();
+  const supabase = useMemo(() => createClient(), []);
   const [orders, setOrders] = useState<Database['public']['Tables']['orders']['Row'][]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  const fetchOrders = async () => {
+  const fetchOrders = useCallback(async () => {
     if (!user) {
       setOrders([]);
       setIsLoading(false);
@@ -110,11 +110,11 @@ export function useOrders() {
 
     if (!error && data) setOrders(data);
     setIsLoading(false);
-  };
+  }, [user, supabase]);
 
   useEffect(() => {
     fetchOrders();
-  }, [user?.id]);
+  }, [fetchOrders]);
 
   return { orders, isLoading, fetchOrders };
 }

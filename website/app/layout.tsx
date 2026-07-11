@@ -5,13 +5,12 @@ import Footer from '@/src/components/ui/Footer';
 import MobileBottomNav from '@/src/components/ui/MobileBottomNav';
 import { CartProvider } from '@/src/context/CartContext';
 import Navbar from '@/src/components/ui/Navbar';
-import CartDrawer from '@/src/components/ui/CartDrawer';
 import { AuthProvider } from '@/src/context/AuthContext';
 import { ToastProvider } from '@/src/components/ui/Toast';
 import SmoothScroll from '@/src/components/ui/SmoothScroll';
 import LoadingScreen from '@/src/components/ui/LoadingScreen';
-
 import PageTransition from '@/src/components/ui/PageTransition';
+import CartDrawer from '@/src/components/ui/CartDrawer';
 
 const playfair = Playfair_Display({
   subsets: ['latin'],
