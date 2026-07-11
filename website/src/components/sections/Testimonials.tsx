@@ -56,7 +56,7 @@ export default function Testimonials() {
           ))}
         </div>
       </div>
-      <style>{`@media (max-width: 900px) { .test-grid { grid-template-columns: 1fr !important; gap: 4rem !important; } }`}</style>
+      <style>{`@media (max-width: 900px) { .test-grid { grid-template-columns: 1fr !important; gap: 2.5rem !important; } }`}</style>
     </section>
   );
 }

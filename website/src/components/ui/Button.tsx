@@ -24,9 +24,9 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       textTransform: 'uppercase',
       cursor: (disabled || isLoading) ? 'not-allowed' : 'pointer',
       opacity: (disabled || isLoading) ? 0.7 : 1,
-      transition: 'all 0.3s ease',
-      height: '48px',
-      padding: '0 2rem',
+      transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
+      height: '56px',
+      padding: '0 2.5rem',
       position: 'relative',
       overflow: 'hidden',
       width: fullWidth ? '100%' : 'auto',
@@ -65,7 +65,8 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     return (
       <motion.button
         ref={ref}
-        whileTap={(!disabled && !isLoading) ? { scale: 0.98 } : undefined}
+        whileTap={(!disabled && !isLoading) ? { scale: 0.96 } : undefined}
+        transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
         style={{ ...baseStyle, ...variantStyle }}
         disabled={disabled || isLoading}
         className={`custom-btn ${variant} ${className}`}

@@ -233,7 +233,9 @@ export default function Navbar() {
             style={{
               position: 'fixed',
               inset: 0,
-              background: 'var(--color-black)',
+              background: 'rgba(8, 8, 8, 0.65)',
+              backdropFilter: 'blur(40px)',
+              WebkitBackdropFilter: 'blur(40px)',
               zIndex: 99, // Behind the navbar mobile layout (which has z-index 100/201)
               display: 'flex',
               flexDirection: 'column',

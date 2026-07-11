@@ -3,6 +3,7 @@
 import React, { createContext, useContext, useState, useEffect, useCallback, useMemo, ReactNode } from 'react';
 import { User as SupabaseUser } from '@supabase/supabase-js';
 import { createClient } from '@/src/lib/supabase/client';
+import { getSiteUrl } from '@/src/lib/getSiteUrl';
 
 export interface User {
   id: string;
@@ -72,23 +73,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   const syncProfile = useCallback(async (supabaseUser: SupabaseUser) => {
-    console.log('[AuthContext] Syncing profile for user:', supabaseUser.id);
     try {
       const { data, error } = await supabase.from('profiles').select('*').eq('id', supabaseUser.id).single();
       const profile = data;
-      
-      if (error) {
-        console.warn('[AuthContext] Error fetching profile:', error.message);
-      }
-      
-      if (error && error.code === 'PGRST116') {
-        console.warn('[AuthContext] Profile not found. Awaiting DB trigger.');
-      } else if (!error) {
-         console.log('[AuthContext] Profile fetched successfully.');
+      if (error && error.code !== 'PGRST116') {
+        // PGRST116 = row not found — expected for new users, not an error
+        console.warn('[AuthContext] Profile fetch warning:', error.message);
       }
       return profile;
     } catch (err) {
-      console.error('[AuthContext] Exception in syncProfile:', err);
+      console.error('[AuthContext] syncProfile failed:', err);
       return null;
     }
   }, [supabase]);
@@ -141,19 +135,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, [supabase.auth]);
 
   const loginWithGoogle = useCallback(async () => {
-    console.log('[AuthContext] Triggering Google OAuth...');
     setState(s => ({ ...s, isLoading: true }));
-    const { data, error } = await supabase.auth.signInWithOAuth({
+    const { error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
-        redirectTo: `${window.location.origin}/auth/callback`,
+        // getSiteUrl() reads NEXT_PUBLIC_SITE_URL env var first — never hardcodes localhost
+        // This is the fix for iPhone Safari / Android Chrome OAuth failures
+        redirectTo: `${getSiteUrl()}/auth/callback`,
       }
     });
-
-    console.log('[AuthContext] Google OAuth response data:', data);
-
     if (error) {
-      console.error('[AuthContext] Google OAuth Error:', error.message);
       setState(s => ({ ...s, isLoading: false }));
       throw error;
     }
@@ -184,7 +175,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const resetPassword = useCallback(async (email: string) => {
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: `${window.location.origin}/reset-password`,
+      redirectTo: `${getSiteUrl()}/reset-password`,
     });
     if (error) throw error;
   }, [supabase.auth]);

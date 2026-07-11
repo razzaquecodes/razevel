@@ -54,9 +54,9 @@ export default function CollectionsPreview() {
         {/* Header */}
         <div ref={ref} style={{
           display: 'flex', justifyContent: 'space-between',
-          alignItems: 'flex-end', marginBottom: 'clamp(3rem, 5vw, 5rem)',
-          flexWrap: 'wrap', gap: '2rem',
-        }}>
+          alignItems: 'flex-end', marginBottom: 'clamp(2.5rem, 5vw, 5rem)',
+          flexWrap: 'wrap', gap: '1.5rem',
+        }} className="collections-header">
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
             <motion.div className="eyebrow"
               initial={{ opacity: 0 }} animate={inView ? { opacity: 1 } : {}}
@@ -134,6 +134,7 @@ export default function CollectionsPreview() {
       <style>{`
         @media (max-width: 768px) {
           .collections-grid { grid-template-columns: repeat(2, 1fr) !important; }
+          .collections-header { flex-direction: column; align-items: flex-start !important; }
         }
         @media (max-width: 480px) {
           .collections-grid { grid-template-columns: 1fr !important; }

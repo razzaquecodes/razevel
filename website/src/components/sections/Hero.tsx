@@ -88,7 +88,8 @@ export default function Hero() {
       ref={containerRef}
       style={{
         background: 'var(--soft-ivory)',
-        height: '100vh',
+        height: '100svh', // 100svh accounts for mobile browser chrome — 100vh clips content on iOS Safari
+        minHeight: '600px',
         position: 'relative',
         overflow: 'hidden',
         display: 'flex',
@@ -189,7 +190,7 @@ export default function Hero() {
           <h1
             style={{
               fontFamily: 'var(--font-serif)',
-              fontSize: 'clamp(3rem, 5.5vw, 6.2rem)',
+              fontSize: 'clamp(2.2rem, 5.5vw, 6.2rem)',
               lineHeight: 1.06,
               fontWeight: 400,
               color: 'var(--color-black)',
@@ -217,9 +218,10 @@ export default function Hero() {
           <div
             style={{
               display: 'flex',
-              gap: '2.5rem',
+              flexWrap: 'wrap',
+              gap: '1.5rem',
               alignItems: 'center',
-              marginBottom: 'clamp(4rem, 8vw, 7rem)',
+              marginBottom: 'clamp(3rem, 8vw, 7rem)',
             }}
           >
             <Link
@@ -296,10 +298,15 @@ export default function Hero() {
             margin: 0 auto;
             text-align: center;
             align-items: center;
+            padding-top: 2rem;
           }
           .hero-content-wrapper div {
             justify-content: center;
           }
+        }
+        @media (max-width: 480px) {
+          /* Reduce badge opacity on very small screens to save space */
+          .hero-content-wrapper .hero-badge { display: none; }
         }
       `}</style>
     </section>

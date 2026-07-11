@@ -100,16 +100,16 @@ export default function BrandStory() {
                 <div style={{ position: 'absolute', inset: 0, background: 'rgba(8,8,8,0.03)', pointerEvents: 'none' }} />
               </div>
 
-              {/* Floating label */}
+              {/* Floating label — positioned to sit inside card on mobile, overlapping on desktop */}
               <div style={{
-                position: 'absolute', bottom: -24, right: -24,
+                position: 'absolute', bottom: 0, right: 0,
                 background: 'var(--deep-black)',
-                padding: '1.5rem 2rem',
+                padding: '1.25rem 1.5rem',
                 boxShadow: '0 24px 40px rgba(8,8,8,0.1)',
-                minWidth: 200,
-              }}>
+                minWidth: 160,
+              }} className="brand-stat-label">
                 <p style={{
-                  fontFamily: 'var(--font-serif)', fontSize: '2.5rem',
+                  fontFamily: 'var(--font-serif)', fontSize: '2.2rem',
                   fontWeight: 400, color: 'var(--warm-gold)', margin: '0 0 4px', lineHeight: 1,
                 }}>800+</p>
                 <p className="t-label" style={{ fontSize: '0.55rem', color: 'rgba(250,250,250,0.6)' }}>Hours per Bespoke Piece</p>
@@ -136,6 +136,7 @@ export default function BrandStory() {
       <style>{`
         @media (max-width: 900px) {
           .heritage-grid, .heritage-main-grid { grid-template-columns: 1fr !important; }
+          .brand-stat-label { position: relative !important; bottom: auto !important; right: auto !important; margin-top: 1rem; }
         }
       `}</style>
     </section>

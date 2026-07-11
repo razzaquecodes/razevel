@@ -24,7 +24,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             transition: 'border-color 0.3s ease',
             display: 'flex',
             alignItems: 'center',
-            paddingBottom: '0.5rem'
+            paddingBottom: '0.75rem'
           }}
         >
           {icon && (
@@ -67,10 +67,11 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
                 border: 'none',
                 outline: 'none',
                 fontFamily: 'var(--font-sans)',
-                fontSize: '1rem',
+                fontSize: '1.05rem',
                 color: 'var(--color-black)',
-                padding: '0',
-                marginTop: (isFocused || hasValue) ? '0.5rem' : '0',
+                padding: '0.25rem 0 0 0',
+                marginTop: (isFocused || hasValue) ? '0.75rem' : '0',
+                transition: 'all 0.3s ease',
               }}
               {...props}
             />
