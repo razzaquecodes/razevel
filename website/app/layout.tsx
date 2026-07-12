@@ -29,25 +29,29 @@ const montserrat = Montserrat({
 
 export const metadata: Metadata = {
   title: {
-    default: 'RAZEVÉL — Crafted for Forever. Luxury Indian Ethnic Wear & Couture',
+    default: 'RAZEVÉL',
     template: '%s | RAZEVÉL',
   },
-  description:
-    "India's premier handcrafted luxury ethnic wear house. Bespoke lehengas, sherwanis, anarkalis and made-to-order couture. 200–800 hours of artisan embroidery. Every piece is singular.",
+  description: 'Crafted for Forever.',
+  icons: {
+    icon: '/icon.png',
+    apple: '/icon.png',
+    shortcut: '/icon.png',
+  },
   keywords: [
     'luxury Indian ethnic wear', 'bespoke lehenga', 'handcrafted couture India',
     'zardozi embroidery', 'RAZEVÉL', 'made to order Indian fashion',
     'bridal lehenga Patna', 'Indian luxury fashion house', 'bespoke sherwani',
   ],
   openGraph: {
-    title: 'RAZEVÉL — Crafted for Forever.',
-    description: "India's premier handcrafted luxury ethnic wear house.",
+    title: 'RAZEVÉL',
+    description: 'Crafted for Forever.',
     type: 'website', locale: 'en_IN', siteName: 'RAZEVÉL',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'RAZEVÉL — Crafted for Forever.',
-    description: "India's premier handcrafted luxury ethnic wear house.",
+    title: 'RAZEVÉL',
+    description: 'Crafted for Forever.',
   },
   robots: { index: true, follow: true },
 };
