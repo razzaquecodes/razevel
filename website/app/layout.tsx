@@ -35,8 +35,8 @@ export const metadata: Metadata = {
   description: 'Crafted for Forever.',
   icons: {
     icon: '/icon.png',
-    apple: '/icon.png',
-    shortcut: '/icon.png',
+    apple: '/apple-icon.png',
+    shortcut: '/favicon.ico',
   },
   keywords: [
     'luxury Indian ethnic wear', 'bespoke lehenga', 'handcrafted couture India',
